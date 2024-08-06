@@ -1,11 +1,10 @@
-/* script.js */
 document.getElementById('calculateButton').addEventListener('click', function() {
     const firstName = document.getElementById('firstName').value;
-    const middleName = document.getElementById('middleName').value;
+    const middleName = document.getElementById('middleName').value || '';
     const lastName = document.getElementById('lastName').value;
     const birthdate = document.getElementById('birthdate').value;
 
-    if (!firstName || !middleName || !lastName || !birthdate || birthdate.length !== 8) {
+    if (!firstName || !lastName || !birthdate || birthdate.length !== 8) {
         alert('Please fill in all fields correctly.');
         return;
     }
@@ -35,8 +34,11 @@ document.getElementById('calculateButton').addEventListener('click', function() 
 
     document.getElementById('ppinResult').textContent = PPIN;
 
-    // Day of Week Calculation
-    const birthdateObj = new Date(`${birthdate.slice(4, 8)}-${birthdate.slice(0, 2)}-${birthdate.slice(2, 4)}`);
+    // Correct Day of Week Calculation
+    const year = parseInt(birthdate.slice(4, 8));
+    const month = parseInt(birthdate.slice(0, 2)) - 1; // Month index in JS is 0-based
+    const day = parseInt(birthdate.slice(2, 4));
+    const birthdateObj = new Date(year, month, day);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const colors = ['white', 'yellow', 'blue', 'red', 'green', 'black', 'pink'];
     const dayIndex = birthdateObj.getDay();
